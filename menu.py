@@ -18,10 +18,26 @@ def main_menu(font, screen):
         exit_button = pygame.Rect(300, 450, 400, 50)
         
         # Draw buttons
-        pygame.draw.rect(screen, BUTTON_COLOR, start_button)
-        pygame.draw.rect(screen, BUTTON_COLOR, continue_button)
-        pygame.draw.rect(screen, BUTTON_COLOR, options_button)
-        pygame.draw.rect(screen, BUTTON_COLOR, exit_button)
+        if start_button.collidepoint(mouse_x, mouse_y):
+            pygame.draw.rect(screen, HOVER_COLOR, start_button)
+        else:
+            pygame.draw.rect(screen, BUTTON_COLOR, start_button)
+
+        if continue_button.collidepoint(mouse_x, mouse_y):
+            pygame.draw.rect(screen, HOVER_COLOR, continue_button)
+        else:
+            pygame.draw.rect(screen, BUTTON_COLOR, continue_button)
+
+        if options_button.collidepoint(mouse_x, mouse_y):
+            pygame.draw.rect(screen, HOVER_COLOR, options_button)
+        else:
+            pygame.draw.rect(screen, BUTTON_COLOR, options_button)
+
+        if exit_button.collidepoint(mouse_x, mouse_y):
+            pygame.draw.rect(screen, HOVER_COLOR, exit_button)
+        else:
+            pygame.draw.rect(screen, BUTTON_COLOR, exit_button)
+
         
         pygame.draw.rect(screen, BORDER_COLOR, start_button, 5)
         pygame.draw.rect(screen, BORDER_COLOR, continue_button, 5)

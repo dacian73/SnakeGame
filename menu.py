@@ -1,6 +1,7 @@
 # Main menu
 import sys
 from constants import *
+from game import new_game
 from helper import *
 
 
@@ -58,6 +59,7 @@ def main_menu(font, screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button.collidepoint(mouse_x, mouse_y):
                     print("New Game")
+                    new_game(font, screen)
                 if continue_button.collidepoint(mouse_x, mouse_y):
                     print("Continue")
                 if options_button.collidepoint(mouse_x, mouse_y):

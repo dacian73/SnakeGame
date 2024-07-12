@@ -1,3 +1,4 @@
+import random
 import sys
 import pygame
 
@@ -6,6 +7,7 @@ from helper import *
 
 
 def new_game(font, screen):
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -13,6 +15,11 @@ def new_game(font, screen):
                 sys.exit()
 
         draw_text('New Game Screen', font, WHITE, screen, 250, 250)
+
+        # Function to generate random position for fruit
+        def random_fruit_position():
+            return (random.randint(0, (SCREEN_WIDTH - 20) // 20) * 20, random.randint(0, (SCREEN_HEIGHT - 20) // 20) * 20)
+
 
         # Timer
         timer = pygame.time.Clock()
@@ -24,6 +31,8 @@ def new_game(font, screen):
             pygame.Rect(140, 200, 20, 20),
             pygame.Rect(120, 200, 20, 20)
         ]
+
+        fruit = pygame.Rect(*random_fruit_position(), 20, 20)
     
         direction = pygame.K_RIGHT
 
@@ -46,13 +55,19 @@ def new_game(font, screen):
             elif direction == pygame.K_UP:
                 new_head = pygame.Rect(snake[0].x, snake[0].y - 20, 20, 20)
 
-            snake.insert(0, new_head)
-            snake.pop()
+            # Check if the snake eats the fruit
+            if new_head.colliderect(fruit):
+                snake.insert(0, new_head)
+                fruit = pygame.Rect(*random_fruit_position(), 20, 20)
+            else:
+                snake.insert(0, new_head)
+                snake.pop()
             
-            # Clear the screen and draw the snake
+            # Clear the screen and draw the snake and the fruit
             screen.fill(BLACK)
             for segment in snake:
                 pygame.draw.rect(screen, SNAKE_COLOR, segment)
+            pygame.draw.rect(screen, RED, fruit)
 
             timer.tick(5)
             pygame.display.flip()
